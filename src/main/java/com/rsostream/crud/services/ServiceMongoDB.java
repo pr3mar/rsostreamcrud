@@ -10,7 +10,7 @@ import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 import com.rsostream.crud.models.Device;
 import com.rsostream.crud.models.DeviceSettings;
-import com.rsostream.crud.models.sensorReadings.SensorReading;
+import com.rsostream.crud.models.sensorReadings.*;
 import com.rsostream.crud.properties.PropertiesMongoDB;
 import org.bson.codecs.configuration.CodecRegistry;
 import org.bson.codecs.pojo.PojoCodecProvider;
@@ -42,7 +42,11 @@ public class ServiceMongoDB {
     //    private MongoCollection<Document> deviceCollection;
     private MongoCollection<Device> deviceCollection;
     private MongoCollection<DeviceSettings> settingsCollection;
-    private MongoCollection<SensorReading> sensorDataCollection;
+    private MongoCollection<AltitudeReading> altitudeDataCollection;
+    private MongoCollection<BatteryReading> batteryDataCollection;
+    private MongoCollection<GPSReading> gpsDataCollection;
+    private MongoCollection<HumidityReading> humidityDataCollection;
+    private MongoCollection<LuxReading> luxDataCollection;
 
     private void init(@Observes @Initialized(ApplicationScoped.class) Object init) {
         CodecRegistry pojoCodecRegistry = fromRegistries(MongoClient.getDefaultCodecRegistry(),
@@ -59,7 +63,11 @@ public class ServiceMongoDB {
         deviceCollection = db.getCollection(propertiesMongoDB.getDeviceCollection(), Device.class);
 //        deviceCollection = db.getCollection(propertiesMongoDB.getDeviceCollection());
         settingsCollection = db.getCollection(propertiesMongoDB.getSettingsCollection(), DeviceSettings.class);
-        sensorDataCollection = db.getCollection(propertiesMongoDB.getSensorDataCollection(), SensorReading.class);
+        altitudeDataCollection = db.getCollection(propertiesMongoDB.getSensorDataCollection(), AltitudeReading.class);
+        batteryDataCollection = db.getCollection(propertiesMongoDB.getSensorDataCollection(), BatteryReading.class);
+        gpsDataCollection = db.getCollection(propertiesMongoDB.getSensorDataCollection(), GPSReading.class);
+        humidityDataCollection = db.getCollection(propertiesMongoDB.getSensorDataCollection(), HumidityReading.class);
+        luxDataCollection = db.getCollection(propertiesMongoDB.getSensorDataCollection(), LuxReading.class);
     }
 
     private void stop(@Observes @Destroyed(ApplicationScoped.class) Object destroyed) {
@@ -109,9 +117,49 @@ public class ServiceMongoDB {
         }
     }
 
-    public boolean insertNewReading(SensorReading reading) throws Exception {
+
+    public boolean insertAltimeterReading(AltitudeReading reading) throws Exception {
         try {
-            sensorDataCollection.insertOne(reading);
+            altitudeDataCollection.insertOne(reading);
+            return true;
+        } catch (MongoWriteException|NullPointerException e) {
+            log.error("Inserting new sensor reading failed:" + e.getMessage());
+            return false;
+        }
+    }
+
+    public boolean insertBatteryReading(BatteryReading reading) throws Exception {
+        try {
+            batteryDataCollection.insertOne(reading);
+            return true;
+        } catch (MongoWriteException|NullPointerException e) {
+            log.error("Inserting new sensor reading failed:" + e.getMessage());
+            return false;
+        }
+    }
+
+    public boolean insertGpsReading(GPSReading reading) throws Exception {
+        try {
+            gpsDataCollection.insertOne(reading);
+            return true;
+        } catch (MongoWriteException|NullPointerException e) {
+            log.error("Inserting new sensor reading failed:" + e.getMessage());
+            return false;
+        }
+    }
+
+    public boolean insertHumidityReading(HumidityReading reading) throws Exception {
+        try {
+            humidityDataCollection.insertOne(reading);
+            return true;
+        } catch (MongoWriteException|NullPointerException e) {
+            log.error("Inserting new sensor reading failed:" + e.getMessage());
+            return false;
+        }
+    }
+    public boolean insertLuxReading(LuxReading reading) throws Exception {
+        try {
+            luxDataCollection.insertOne(reading);
             return true;
         } catch (MongoWriteException|NullPointerException e) {
             log.error("Inserting new sensor reading failed:" + e.getMessage());

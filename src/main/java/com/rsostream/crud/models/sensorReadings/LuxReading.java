@@ -8,7 +8,7 @@ import java.util.Date;
 @XmlRootElement
 public class LuxReading extends SensorReading {
     private float lux;
-    public static float numberOfAttributes = 4;
+    public static int numberOfAttributes = 4;
 
     public LuxReading(){}
 

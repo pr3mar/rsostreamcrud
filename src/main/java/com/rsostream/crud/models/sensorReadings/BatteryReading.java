@@ -8,7 +8,7 @@ import java.util.Date;
 @XmlRootElement
 public class BatteryReading extends SensorReading {
     private float batteryLevel;
-    public static float numberOfAttributes = 4;
+    public static int numberOfAttributes = 4;
 
     public BatteryReading() {}
 

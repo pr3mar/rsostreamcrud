@@ -10,12 +10,14 @@ import java.util.Date;
 public class SensorReading {
     public final EnumType TYPE;
     private Date timeObtained;
+    private Date timeStored;
     private String imei;
     private int signalQuality;
     private static int numberOfAttributes = 3;
 
     public SensorReading() {
         this.TYPE = EnumType.SUPER;
+        this.timeStored = new Date();
     }
 
     SensorReading(Date timeObtained, String imei, int signalQuality) {
@@ -23,6 +25,7 @@ public class SensorReading {
         this.timeObtained = timeObtained;
         this.imei = imei;
         this.signalQuality = signalQuality;
+        this.timeStored = new Date();
     }
 
     SensorReading(EnumType type, Date timeObtained, String imei, int signalQuality) {
@@ -30,6 +33,7 @@ public class SensorReading {
         this.timeObtained = timeObtained;
         this.imei = imei;
         this.signalQuality = signalQuality;
+        this.timeStored = new Date();
     }
 
     public Date getTimeObtained() {
@@ -68,5 +72,13 @@ public class SensorReading {
         String IMEI = data[1];
         int signalQuality = Integer.parseInt(data[2]);
         return new SensorReading(dateObtained, IMEI, signalQuality);
+    }
+
+    public Date getTimeStored() {
+        return timeStored;
+    }
+
+    public void setTimeStored(Date timeStored) {
+        this.timeStored = timeStored;
     }
 }
