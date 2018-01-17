@@ -24,6 +24,7 @@ import javax.inject.Inject;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.mongodb.client.model.Filters.and;
 import static com.mongodb.client.model.Filters.eq;
 import static org.bson.codecs.configuration.CodecRegistries.fromProviders;
 import static org.bson.codecs.configuration.CodecRegistries.fromRegistries;
@@ -114,6 +115,126 @@ public class ServiceMongoDB {
         } catch (MongoWriteException e) {
             log.error("Device not unique!");
             return false;
+        }
+    }
+
+    public List<AltitudeReading> getAltitudeReadings(String imei) {
+        try {
+            List<AltitudeReading> docs = new ArrayList<AltitudeReading>() {
+            };
+            Block<AltitudeReading> readings = new Block<AltitudeReading>() {
+                @Override
+                public void apply(final AltitudeReading reading) {
+                    docs.add(reading);
+                }
+            };
+            altitudeDataCollection.find(
+                    and(
+                     eq("imei", imei),
+                            eq("TYPE","ALT")
+                    )).forEach(readings);
+            log.info("Found: " + docs.size() + " readings.");
+            return docs;
+        } catch (NullPointerException e) {
+            log.info("Did not find any devices.");
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public List<HumidityReading> getHumidityReadings(String imei) {
+        try {
+            List<HumidityReading> docs = new ArrayList<HumidityReading>() {
+            };
+            Block<HumidityReading> readings = new Block<HumidityReading>() {
+                @Override
+                public void apply(final HumidityReading reading) {
+                    docs.add(reading);
+                }
+            };
+            humidityDataCollection.find(
+                    and(
+                     eq("imei", imei),
+                            eq("TYPE","HUM")
+                    )).forEach(readings);
+            log.info("Found: " + docs.size() + " readings.");
+            return docs;
+        } catch (NullPointerException e) {
+            log.info("Did not find any devices.");
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public List<BatteryReading> getBatteryReadings(String imei) {
+        try {
+            List<BatteryReading> docs = new ArrayList<BatteryReading>() {
+            };
+            Block<BatteryReading> readings = new Block<BatteryReading>() {
+                @Override
+                public void apply(final BatteryReading reading) {
+                    docs.add(reading);
+                }
+            };
+            batteryDataCollection.find(
+                    and(
+                     eq("imei", imei),
+                            eq("TYPE","BAT")
+                    )).forEach(readings);
+            log.info("Found: " + docs.size() + " readings.");
+            return docs;
+        } catch (NullPointerException e) {
+            log.info("Did not find any devices.");
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public List<GPSReading> getGPSReadings(String imei) {
+        try {
+            List<GPSReading> docs = new ArrayList<GPSReading>() {
+            };
+            Block<GPSReading> readings = new Block<GPSReading>() {
+                @Override
+                public void apply(final GPSReading reading) {
+                    docs.add(reading);
+                }
+            };
+            gpsDataCollection.find(
+                    and(
+                     eq("imei", imei),
+                            eq("TYPE","GPS")
+                    )).forEach(readings);
+            log.info("Found: " + docs.size() + " readings.");
+            return docs;
+        } catch (NullPointerException e) {
+            log.info("Did not find any devices.");
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public List<LuxReading> getLuxReadings(String imei) {
+        try {
+            List<LuxReading> docs = new ArrayList<LuxReading>() {
+            };
+            Block<LuxReading> readings = new Block<LuxReading>() {
+                @Override
+                public void apply(final LuxReading reading) {
+                    docs.add(reading);
+                }
+            };
+            luxDataCollection.find(
+                    and(
+                     eq("imei", imei),
+                            eq("TYPE","LUX")
+                    )).forEach(readings);
+            log.info("Found: " + docs.size() + " readings.");
+            return docs;
+        } catch (NullPointerException e) {
+            log.info("Did not find any devices.");
+            e.printStackTrace();
+            return null;
         }
     }
 

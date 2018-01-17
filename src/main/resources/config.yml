@@ -7,21 +7,41 @@ kumuluzee:
     start-retry-delay-ms: 500
     max-retry-delay-ms: 900000
     etcd:
-      hosts: http://localhost:2379
+#      hosts: http://localhost:2379
+      hosts: http://etcd:2379
   server:
-#    base-url: http://169.51.13.160 # zunanji URL
-    base-url: http://localhost:8086 # zunanji URL
+    base-url: http://169.51.13.160 # zunanji URL
+#    base-url: http://localhost:8086 # zunanji URL
     http:
-      port: 8086
+      port: 8080
+#      port: 8086
   discovery:
     etcd:
-#      hosts: http://etcd:2379
-      hosts: http://localhost:2379
+      hosts: http://etcd:2379
+#      hosts: http://localhost:2379
     ttl: 20
     ping-interval: 15
   cors-filter:
     servlet:
       allow-origin: "*"
+  fault-tolerance:
+    config:
+      watch-enabled: true
+      watch-properties: timeout.value,circuit-breaker.failure-ratio
+    circuit-breaker:
+      delay: 3s
+    crud:
+      bulkhead:
+        value: 5
+      timeout:
+        value: 2500ms
+      circuit-breaker:
+        request-volume-threshold: 10
+        failure-ratio: 0.3
+        metrics:
+          rolling-window:
+            size: 8s
+            buckets: 4
   metrics:
     servlet:
       enabled: true
@@ -84,4 +104,3 @@ mongo-db:
   device-collection: Devices
   settings-collection: DeviceSettings
   sensor-data-collection: SensorData
-# ETCD kubernetes deployment -> github rso-customers @ jmezna

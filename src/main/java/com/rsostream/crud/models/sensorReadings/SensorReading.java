@@ -1,6 +1,7 @@
 package com.rsostream.crud.models.sensorReadings;
 
 import com.rsostream.crud.util.InvalidMessageException;
+import sun.management.Sensor;
 
 import javax.xml.bind.annotation.XmlRootElement;
 import java.util.Date;
@@ -17,6 +18,11 @@ public class SensorReading {
 
     public SensorReading() {
         this.TYPE = EnumType.SUPER;
+        this.timeStored = new Date();
+    }
+
+    public SensorReading(EnumType type) {
+        this.TYPE = type;
         this.timeStored = new Date();
     }
 

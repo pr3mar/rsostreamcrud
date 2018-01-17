@@ -12,6 +12,7 @@ public class HumidityReading extends SensorReading {
     static int numberOfAttributes = 5;
 
     public HumidityReading() {
+        super(EnumType.HUM);
     }
 
     public HumidityReading(Date dateObtained, String IMEI, int signalQuality, float temperature, float humidity) {

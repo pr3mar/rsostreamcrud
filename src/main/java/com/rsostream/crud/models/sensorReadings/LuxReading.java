@@ -10,7 +10,9 @@ public class LuxReading extends SensorReading {
     private float lux;
     public static int numberOfAttributes = 4;
 
-    public LuxReading(){}
+    public LuxReading(){
+        super(EnumType.LUX);
+    }
 
     public LuxReading(Date dateObtained, String IMEI, int signalQuality, float lux) {
         super(EnumType.LUX, dateObtained, IMEI, signalQuality);

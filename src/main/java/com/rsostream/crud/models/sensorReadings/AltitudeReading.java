@@ -12,6 +12,7 @@ public class AltitudeReading extends SensorReading {
     public static int numberOfAttributes = 4;
 
     public AltitudeReading() {
+        super(EnumType.ALT);
     }
 
     public AltitudeReading(Date dateObtained, String IMEI, int signalQuality, float altitude) {

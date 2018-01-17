@@ -12,7 +12,9 @@ public class GPSReading extends SensorReading {
     private float speed;
     public static int numberOfAttributes = 6;
 
-    public GPSReading(){}
+    public GPSReading(){
+        super(EnumType.GPS);
+    }
 
     public GPSReading(Date timeObtained, String IMEI, int signalQuality, float lat, float lng, float speed) {
         super(EnumType.GPS, timeObtained, IMEI, signalQuality);
