@@ -11,7 +11,7 @@ spec:
     spec:
       containers:
       - image: rsostream/rsostreamcrud:0.01
-        name: rso-dummy-consumer
+        name: rso-iot-crud
         env:
           - name: KUMULUZEE_DISCOVERY_CLUSTER
             value: rso-iot

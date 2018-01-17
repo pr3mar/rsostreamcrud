@@ -8,4 +8,4 @@ ADD ./target/rsostream-crud-1.0-SNAPSHOT.jar /app
 
 EXPOSE 8080
 
-CMD ["java", "-jar", "rsostream-tcp-1.0-SNAPSHOT.jar"]
+CMD ["java", "-jar", "rsostream-crud-1.0-SNAPSHOT.jar"]
